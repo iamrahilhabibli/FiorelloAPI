@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Fiorello.Application.Abstraction.Repository;
+using Fiorello.Domain.Entities;
+using Fiorello.Persistence.Contexts;
 
-namespace Fiorello.Persistence.Implementations.Repositories
+namespace Fiorello.Persistence.Implementations.Repositories;
+
+public class CategoryReadRepository : ReadRepository<Category>, ICategoryReadRepository
 {
-    internal class CategoryReadRepository
+    public CategoryReadRepository(AppDbContext context) : base(context)
     {
     }
 }

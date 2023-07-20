@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Fiorello.Domain.Entities;
 
-namespace Fiorello.Application.Abstraction.Repository
+namespace Fiorello.Application.Abstraction.Repository;
+
+public interface ICategoryReadRepository:IReadRepository<Category>
 {
-    internal class ICategoryRepository
-    {
-    }
+
 }
