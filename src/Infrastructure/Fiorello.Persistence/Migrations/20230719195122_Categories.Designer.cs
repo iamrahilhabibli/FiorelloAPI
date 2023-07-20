@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fiorello.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230719061111_Initial")]
-    partial class Initial
+    [Migration("20230719195122_Categories")]
+    partial class Categories
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
