@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fiorello.Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Categories : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
