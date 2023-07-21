@@ -1,6 +1,10 @@
-﻿using Fiorello.Application.Abstraction.Repository;
+﻿using AutoMapper;
+using Fiorello.Application.Abstraction.Repository;
 using Fiorello.Application.Abstraction.Services;
+using Fiorello.Application.DTOs.CategoryDTOs;
 using Fiorello.Domain.Entities;
+using Fiorello.Persistence.Exceptions;
+using Fiorello.Persistence.Implementations.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,68 +16,39 @@ namespace Fiorello.Persistence.Implementations.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly IReadRepository<Category> _categoryReadRepository;
-        private readonly IWriteRepository<Category> _categoryWriteRepository;
+        private readonly ICategoryReadRepository _readRepository;
+        private readonly ICategoryWriteRepository _writeRepository;
+        private readonly IMapper _mapper;
 
-        public CategoryService(IReadRepository<Category> categoryReadRepository,
-                               IWriteRepository<Category> categoryWriteRepository)
+        public CategoryService(ICategoryReadRepository readRepository,
+                           ICategoryWriteRepository writeRepository,
+                           IMapper mapper)
         {
-            _categoryReadRepository = categoryReadRepository;
-            _categoryWriteRepository = categoryWriteRepository;
+            _readRepository = readRepository;
+            _writeRepository = writeRepository;
+            _mapper = mapper;
         }
-        public async Task<Category> GetByIdAsync(Guid Id)
-        {
-            return await _categoryReadRepository.GetByIdAsync(Id);
-        }
-        public async Task<IEnumerable<Category>> GetAllCategories()
-        {
-            return await _categoryReadRepository.GetAll().ToListAsync();
-        }
-        public async Task<Category> CreateCategory(string name, string description)
-        {
-            var category = new Category
-            {
-                Name = name,
-                Description = description
-            };
 
-            await _categoryWriteRepository.AddAsync(category);
-            await _categoryWriteRepository.SaveChangesAsync();
-            return category;
-        }
-        public async Task<Category> UpdateCategory(Guid Id, string name, string description)
+        public async Task CreateAsync(CategoryCreateDto categoryCreateDto)
         {
-            var category = await _categoryReadRepository.GetByIdAsync(Id);
-            if (category == null)
-            {
-                throw new();
-            }
+            Category? dbCategory = await _readRepository
+                .GetByExpressionAsync(c => c.Name.ToLower().Equals(categoryCreateDto.name.ToLower()));
+            if (dbCategory is not null) throw new DuplicatedException("This name already exists!!!");
 
-            category.Name = name;
-            category.Description = description;
+            Category newCategory=_mapper.Map<Category>(categoryCreateDto);
+            await _writeRepository.AddAsync(newCategory);
+            await _writeRepository.SaveChangesAsync();
+        }
 
-            _categoryWriteRepository.Update(category);
-            await _categoryWriteRepository.SaveChangesAsync();
-            return category;
-        }
-        public async Task DeleteCategory(Guid Id)
+        public Task<List<CategoryGetDto>> GetAllAsync()
         {
-            var category = await _categoryReadRepository.GetByIdAsync(Id);
-            if (category != null)
-            {
-                _categoryWriteRepository.Remove(category);
-                await _categoryWriteRepository.SaveChangesAsync();
-            }
-            // Null Check!
+            throw new NotImplementedException();
         }
-        public async Task<Category> GetCategoryByName(string name)
+
+        public Task<CategoryGetDto> GetByIdAsync(Guid Id)
         {
-            return await _categoryReadRepository.GetByExpressionAsync(c => c.Name == name);
+            throw new NotImplementedException();
         }
-        //public async Task<IEnumerable<Category>> GetTopNCategoriesOrderedByNewest(int n)
-        //{
-        //    return await _categoryReadRepository.GetAllFilteredOrderBy(c => true, n, 0, c => c.DateCreated, false).ToListAsync();
-        //}
 
     }
 }

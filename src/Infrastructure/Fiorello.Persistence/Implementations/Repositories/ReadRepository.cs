@@ -18,7 +18,7 @@ public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity, new()
         var query = Table.AsQueryable();
         foreach (var inculde in inculdes)
         {
-            query.Include(inculde);
+            query = query.Include(inculde);
         }
         return isTracking ? query : query.AsNoTracking();
     }
@@ -28,19 +28,19 @@ public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity, new()
         var query = Table.Where(expression).Skip(Skip).Take(Take).AsQueryable();
         foreach (var inculde in inculdes)
         {
-            query.Include(inculde);
+            query = query.Include(inculde);
         }
         return isTracking ? query : query.AsNoTracking();
     }
 
     public IQueryable<T> GetAllExpressionOrderBy(Expression<Func<T, bool>> expression, int Skip, int Take, Expression<Func<T, object>> expressionOrder, bool isOrdered = true, bool isTracking = true, params string[] inculdes)
     {
-        var query  = Table.Where(expression).AsQueryable();
+        var query = Table.Where(expression).AsQueryable();
         query = isOrdered ? query.OrderBy(expressionOrder) : query.OrderByDescending(expressionOrder);
         query = query.Skip(Skip).Take(Take);
         foreach (var inculde in inculdes)
         {
-            query.Include(inculde);
+            query = query.Include(inculde);
         }
         return isTracking ? query : query.AsNoTracking();
     }
