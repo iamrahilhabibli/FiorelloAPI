@@ -9,10 +9,14 @@ namespace Fiorello.Persistence.Contexts
     {
         public AppDbContext(DbContextOptions<AppDbContext>options):base(options) { }
         public DbSet<Category> Categories { get; set; } = null!;
+        public DbSet<Slider> Sliders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryConfiguration).Assembly);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SliderConfiguration).Assembly);
             base.OnModelCreating(modelBuilder);
         }
     }
