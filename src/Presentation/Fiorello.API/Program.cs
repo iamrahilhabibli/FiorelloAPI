@@ -15,18 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(CategoryCreateDtoValidator));
-//builder.Services.AddAutoMapper(typeof(CategoryProfile).Assembly);
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-});
-builder.Services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
-builder.Services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
 
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 
 
 builder.Services.AddPersistenceServices();
