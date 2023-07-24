@@ -14,8 +14,6 @@ namespace Fiorello.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryConfiguration).Assembly);
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SliderConfiguration).Assembly);
             base.OnModelCreating(modelBuilder);
         }
