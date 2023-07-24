@@ -1,8 +1,8 @@
-﻿using Fiorello.Application.DTOs.Auth;
+﻿using Fiorello.Application.DTOs.AuthDTOs;
 
 namespace Fiorello.Application.Abstraction.Services;
 
 public interface IAuthService
 {
-    Task Register(RegisterDTO registerDTO);
+    Task Register(RegisterDto registerDTO);
 }

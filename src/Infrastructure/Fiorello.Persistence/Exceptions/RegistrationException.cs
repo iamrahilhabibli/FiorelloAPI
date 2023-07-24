@@ -3,7 +3,7 @@ using System.Net;
 
 namespace UnionArchitecture.Persistence.Exceptions;
 
-public class RegistrationException : Exception, IBaseExceptions
+public class RegistrationException : Exception, IBaseException
 {
     public int StatusCode { get; set; }
     public string CustomMessage { get; set; }
