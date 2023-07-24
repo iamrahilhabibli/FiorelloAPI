@@ -19,9 +19,9 @@ public static class ExceptionHandlerMiddeleware
 
                 if (contextFeature is not null)
                 {
-                    if (contextFeature.Error is IBaseExceptions)
+                    if (contextFeature.Error is IBaseException)
                     {
-                        var exception = (IBaseExceptions)contextFeature.Error;
+                        var exception = (IBaseException)contextFeature.Error;
                         StatusCode = exception.StatusCode;
                         message = exception.CustomMessage;
                     }

@@ -2,7 +2,7 @@
 
 namespace Fiorello.Persistence.Exceptions;
 
-public class DuplicatedException : Exception, IBaseExceptions
+public class DuplicatedException : Exception, IBaseException
 {
     public int StatusCode { get ; set ; }
     public string CustomMessage { get ; set; }

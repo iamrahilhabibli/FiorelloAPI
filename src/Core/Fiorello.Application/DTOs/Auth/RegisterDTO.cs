@@ -1,2 +1,4 @@
-﻿namespace Fiorello.Application.DTOs.Auth;
-    public record RegisterDTO(string? Fullname, string Username, string Email, string password);
+﻿namespace Fiorello.Application.DTOs.AuthDTOs
+{
+    public record RegisterDto(string? fullname, string username, string email, string password);
+}
