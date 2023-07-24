@@ -39,6 +39,7 @@ namespace Fiorello.Persistence.ExtensionMethods
 
             //Services
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAuthService, AuthService>();
 
 
             //User 
