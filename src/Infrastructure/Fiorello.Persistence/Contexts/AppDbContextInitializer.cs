@@ -41,8 +41,8 @@ public class AppDbContextInitializer
 
     public async Task UserSeedAsync()
     {
-        var ByUser = await _userManager.FindByEmailAsync("superadmin@gmail.com");
-        if (ByUser is not null) throw new Exception();
+        //var ByUser = await _userManager.FindByEmailAsync("superadmin@gmail.com");
+        //if (ByUser is not null) throw new Exception();
 
         AppUser appUser = new()
         {

@@ -27,7 +27,7 @@ namespace Fiorello.Persistence.ExtensionMethods
             //Validators
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
-            services.AddValidatorsFromAssemblyContaining(typeof(CategoryCreateDtoValidator));
+            services.AddValidatorsFromAssemblyContaining<CategoryCreateDtoValidator>();
 
 
             //AutoMapper
