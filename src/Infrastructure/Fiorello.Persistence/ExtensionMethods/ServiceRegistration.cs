@@ -36,9 +36,12 @@ namespace Fiorello.Persistence.ExtensionMethods
             //Repository
             services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
+            services.AddScoped<ISliderReadRepository, SliderReadRepository>();
+            services.AddScoped<ISliderWriteRepository, SliderWriteRepository>();
 
             //Services
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ISliderService, SliderService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddTransient<IJwtService, JwtService>();
 
