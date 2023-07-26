@@ -4,6 +4,7 @@ using Fiorello.Application.Abstraction.Services;
 using Fiorello.Application.DTOs.Blog;
 using Fiorello.Domain.Entities;
 using Fiorello.Persistence.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fiorello.Persistence.Implementations.Services;
 
@@ -56,7 +57,7 @@ public class BlogService : IBlogService
         var blogs = await _blogReadReopsitory
                     .GetAll()
                     .Include(x => x.BlogImages)
-                    .Include(x => x.Catagory)
+                    .Include(x => x.Category)
                     .ToListAsync();
 
         if (blogs is null) throw new Exception("Blog is Null");
@@ -99,7 +100,7 @@ public class BlogService : IBlogService
         var Blogs = await _blogReadReopsitory
                     .GetAll()
                     .Include(x => x.BlogImages)
-                    .Include(x => x.Catagory)
+                    .Include(x => x.Category)
                     .FirstOrDefaultAsync(x => x.Id == Id);
         if (Blogs is null) throw new Exception("Blog is null");
         //var EntityToDto = _mapper.Map<BlogGetDTO>(Blogs);
