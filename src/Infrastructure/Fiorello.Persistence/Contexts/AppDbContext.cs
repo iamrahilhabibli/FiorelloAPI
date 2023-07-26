@@ -10,6 +10,8 @@ namespace Fiorello.Persistence.Contexts
         public AppDbContext(DbContextOptions<AppDbContext>options):base(options) { }
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogImage> BlogImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

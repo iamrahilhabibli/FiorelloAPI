@@ -36,11 +36,17 @@ namespace Fiorello.Persistence.ExtensionMethods
             //Repository
             services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
+            services.AddScoped<IBlogReadReopsitory, BlogReadReopsitory>();
+            services.AddScoped<IBlogWriteReopsitory, BlogWriteReopsitory>();
+            services.AddScoped<IBlogImageReadReopsitory, BlogImageReadReopsitory>();
+            services.AddScoped<IBlogImageWriteReopsitory, BlogImageWriteReopsitory>();
 
             //Services
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddTransient<IJwtService, JwtService>();
+            services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IBlogImageService, BlogImageService>();
 
 
             //User 
