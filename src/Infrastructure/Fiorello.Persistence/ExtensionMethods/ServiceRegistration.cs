@@ -44,7 +44,7 @@ namespace Fiorello.Persistence.ExtensionMethods
             //Services
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddTransient<IJwtService, JwtService>();
+            services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IBlogImageService, BlogImageService>();
 

@@ -3,8 +3,10 @@ using Fiorello.Application.DTOs.AuthDTOs;
 using Fiorello.Application.DTOs.ResponseDTOs;
 using Fiorello.Domain.Entities;
 using Fiorello.Domain.Enums;
+using Fiorello.Persistence.Contexts;
 using Fiorello.Persistence.Exceptions.CustomExceptions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using UnionArchitecture.Persistence.Exceptions;
 
@@ -16,15 +18,18 @@ public class AuthService : IAuthService
     private readonly SignInManager<AppUser> _signInManager;
     private readonly RoleManager<IdentityUser> _roleManager;
     private readonly IJwtService _jwtService;
+    private readonly AppDbContext _context;
     public AuthService(UserManager<AppUser> userManager,
                       SignInManager<AppUser> signinManager,
                       RoleManager<IdentityUser> roleManager,
-                      IJwtService jwtService)
+                      IJwtService jwtService,
+                      AppDbContext context)
     {
         _userManager = userManager;
         _signInManager = signinManager;
         _roleManager = roleManager;
         _jwtService = jwtService;
+        _context = context;
     }
 
     public async Task Register(RegisterDto registerDTO)
@@ -82,6 +87,28 @@ public class AuthService : IAuthService
             throw new SignInFailureException("User is inactive. Please contact support.");
         }
         TokenResponseDto tokenResponse = _jwtService.CreateJwtToken(appUser);
+        return tokenResponse;
+    }
+    public async Task<TokenResponseDto> ValidateRefreshToken(string refreshToken)
+    {
+        if (refreshToken is null)
+        {
+            throw new ArgumentNullException("Refresh token does not exist");
+        }
+        AppUser? appUser = await _context.Users.Where(u => u.RefreshToken == refreshToken).FirstOrDefaultAsync();
+        if (appUser is null)
+        {
+            throw new ArgumentNullException("User does not exist");
+        }
+        if (appUser.RefreshTokenExpiration < DateTime.UtcNow)
+        {
+            throw new ArgumentNullException("Refresh token does not exist");
+        }
+        TokenResponseDto tokenResponse = _jwtService.CreateJwtToken(appUser);
+        appUser.RefreshToken = tokenResponse.refreshToken;
+        appUser.RefreshTokenExpiration = tokenResponse.refreshTokenExpiration;
+        await _userManager.UpdateAsync(appUser);
+
         return tokenResponse;
     }
 }

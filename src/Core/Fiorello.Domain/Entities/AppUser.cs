@@ -6,4 +6,6 @@ public class AppUser : IdentityUser
 {
     public bool IsActive { get; set; }
     public string? FullName { get; set; }
+    public string? RefreshToken { get; set; }
+    public DateTime RefreshTokenExpiration { get; set; }
 }
