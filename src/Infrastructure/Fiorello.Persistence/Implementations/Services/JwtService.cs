@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Fiorello.Persistence.Implementations.Services
@@ -43,8 +44,18 @@ namespace Fiorello.Persistence.Implementations.Services
 
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             string token = handler.WriteToken(tokenGenerator);
+            string refreshToken = GenerateRefeshToken();
 
-            return new TokenResponseDto(token, expiration);
+            //add expiration 
+            DateTime refreshTokenExpiration = DateTime.Now.AddMinutes(Convert.ToInt32(_configuration["RefreshToken:EXPIRATION_MINUTES"]));
+            return new TokenResponseDto(token, expiration, refreshTokenExpiration, refreshToken);
+        }
+        private string GenerateRefeshToken()
+        {
+            byte[] bytes = new byte[64];
+            var randomNumber = RandomNumberGenerator.Create();
+            randomNumber.GetBytes(bytes);
+            return Convert.ToBase64String(bytes);
         }
     }
 }
