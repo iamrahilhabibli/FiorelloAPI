@@ -17,6 +17,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Fiorello.Persistence\Fiorello.Persistence.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure\Fiorello.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Upload\Files\" />
   </ItemGroup>
 
 </Project>
