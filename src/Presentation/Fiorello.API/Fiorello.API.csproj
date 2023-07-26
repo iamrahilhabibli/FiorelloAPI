@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Fiorello.Persistence\Fiorello.Persistence.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure\Fiorello.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
